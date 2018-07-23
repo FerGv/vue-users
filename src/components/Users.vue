@@ -1,7 +1,9 @@
 <template lang="pug">
-  div
-    h1.title Listado de usuarios
-    User(v-for="user in users" :user="user")
+  .columns.is-multiline.is-centered
+    .column.is-12.has-text-centered
+      h1.title Listado de usuarios
+
+    User(v-for="user in users" :user="user" :key="user.login.uuid")
 </template>
 
 <script>
