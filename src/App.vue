@@ -1,13 +1,18 @@
 <template lang="pug">
-  Users/
+  main
+    Loader/
+    Users/
 </template>
 
 <script>
-import Users from './components/Users.vue'
+// Components
+import Loader from './components/Loader.vue';
+import Users from './components/Users.vue';
 
 export default {
-  components: { Users }
-}
+  name: 'App',
+  components: { Loader, Users },
+};
 </script>
 
-<style></style>
+<style lang="scss" scoped></style>

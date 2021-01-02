@@ -1,30 +1,65 @@
 <template lang="pug">
   .columns.is-multiline.is-centered
-    .column.is-12.has-text-centered
-      h1.title Listado de usuarios
+    .column.is-12.has-text-centered.users-nav
+      .hero.is-primary
+        .hero-body
+          .container
+            .title Users
+            .button.is-info(@click="getUsers") Get users
 
-    User(v-for="user in users" :user="user" :key="user.login.uuid")
+    .users.is-12.columns.is-multiline.is-centered
+      User(v-for="user in users" :user="user" :key="user.login.uuid")
 </template>
 
 <script>
-import User from './User.vue'
-import axios from 'axios'
+// Libraries
+import axios from 'axios';
+
+// Components
+import User from './User.vue';
+
+// Event Bus
+import eventBus from '../eventBus';
+
+const API_URL = 'https://randomuser.me/api/?results=20';
 
 export default {
+  name: 'Users',
   components: { User },
-  mounted() {
-    axios.get('https://randomuser.me/api/?results=20')
-          .then(res => this.users = res.data.results)
-          .catch(err => alert('No pudimos obtener los usuarios :('))
+
+  data: () => ({
+    users: [],
+  }),
+
+  async mounted() {
+    await this.getUsers();
   },
-  data() {
-    return {
-      users: []
-    }
-  }
-}
+
+  methods: {
+    async getUsers() {
+      eventBus.$emit('showLoader');
+      try {
+        const res = await axios.get(API_URL);
+        this.users = res.data.results;
+      } catch (error) {
+        console.log(error);
+        alert('An error has ocurred :(');
+      }
+      eventBus.$emit('hideLoader');
+    },
+  },
+};
 </script>
 
-<style lang="sass" scoped>
-
+<style lang="scss" scoped>
+.users-nav {
+  padding: 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.users {
+  margin-top: 1rem;
+  padding: 0 3rem;
+}
 </style>

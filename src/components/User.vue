@@ -16,7 +16,7 @@
             p.subtitle.is-6(v-text="user.email")
 
         .content
-          p #[b Calle]: #[span(v-text="user.location.street")]
+          p #[b Calle]: #[span(v-text="`${user.location.street.name} ${user.location.street.number}`")]
           p #[b Ciudad]: #[span(v-text="user.location.city")]
           p #[b Estado]: #[span(v-text="user.location.state")]
           p #[b Código Postal]: #[span(v-text="user.location.postcode")]
@@ -24,13 +24,16 @@
 
 <script>
 export default {
+  name: 'User',
   props: ['user'],
+
   computed: {
     fullName() {
-      return `${this.user.name.title} ${this.user.name.first} ${this.user.name.last}`
-    }
-  }
-}
+      const { title, first, last } = this.user.name;
+      return `${title} ${first} ${last}`;
+    },
+  },
+};
 </script>
 
 <style lang="sass" scoped>
