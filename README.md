@@ -1,5 +1,11 @@
 # vue-users
 
+[Live Demo](https://fergv.com/vue-users/)
+
+Example of API consuming with Vue
+
+![Demo image](demo.png "Demo image")
+
 ## Project setup
 ```
 npm install
